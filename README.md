@@ -9,3 +9,21 @@ void listDirectoryContents() {
     cout << "Press Enter to return to the menu...\n";
     cin.ignore().get();
 }
+
+void createFolder() {
+    cout << "Enter the name for the new folder: ";
+    string folderName;
+    cin >> folderName;
+    cout << "Folder '" << folderName << "' created successfully!\n";
+    cout << "Press Enter to return to the menu...\n";
+    cin.ignore().get();
+}
+
+void changeFolder() {
+    cout << "Enter the folder name to navigate to: ";
+    string folderName;
+    cin >> folderName;
+    cout << "You have navigated to: C:\\Users\\YourName\\" << folderName << "\n";
+    cout << "Press Enter to return to the menu...\n";
+    cin.ignore().get();
+}
