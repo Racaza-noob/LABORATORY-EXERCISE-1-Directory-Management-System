@@ -1,0 +1,124 @@
+#include <iostream>
+#include <direct.h>
+#include <string>
+
+using namespace std;
+
+void show_files();
+void create_directory();
+void navigate_directory();
+
+int main() {
+    int selection;
+    while (true) {
+        cout << " Menu: " << endl;
+        cout << "1. View Files\n";
+        cout << "2. Create New Directory\n";
+        cout << "3. Switch Directory\n";
+        cout << "4. Exit Program\n";
+        cout << "Please enter your choice: ";
+        cin >> selection;
+
+        switch (selection) {
+            case 1:
+                show_files();
+                break;
+            case 2:
+                create_directory();
+                break;
+            case 3:
+                navigate_directory();
+                break;
+            case 4:
+                return 0;
+            default:
+                cout << "Invalid selection. Try again.\n";
+        }
+    }
+    return 0;
+}
+
+void show_files() {
+    int option;
+    cout << " FILE LIST OPTIONS:" << endl;
+    cout << "1. List All Files\n";
+    cout << "2. List Files by Extension\n";
+    cout << "3. List Files by Pattern\n";
+    cout << "Select an option: ";
+    cin >> option;
+
+    switch (option) {
+        case 1:
+            cout << "Listing all files:\n";
+            system("dir");
+            break;
+        case 2: {
+            string extension;
+            cout << "Enter the file extension (e.g., doc): ";
+            cin >> extension;
+            system(("dir *." + extension).c_str());
+            break;
+        }
+        case 3: {
+            string pattern;
+            cout << "Enter the file name pattern (e.g., *.txt): ";
+            cin >> pattern;
+            system(("dir " + pattern).c_str());
+            break;
+        }
+        default:
+            cout << "Invalid option. Try again.\n";
+    }
+}
+
+void create_directory() {
+    string directoryName;
+    cout << "Enter the name for the new directory: ";
+    cin >> directoryName;
+
+    if (_mkdir(directoryName.c_str()) == 0) {
+        cout << "Directory created successfully." << endl;
+    } else {
+        cout << "Failed to create directory. It may already exist or be invalid." << endl;
+    }
+}
+
+void navigate_directory() {
+    int option;
+    cout << " Directory Navigation Options:" << endl;
+    cout << "1. Move up one level\n";
+    cout << "2. Go to root directory\n";
+    cout << "3. Move to a specific directory\n";
+    cout << "Choose an option: ";
+    cin >> option;
+
+    switch (option) {
+        case 1:
+            if (_chdir("..") == 0) {
+                cout << "Moved up to the parent directory." << endl;
+            } else {
+                cout << "Failed to move up to the parent directory." << endl;
+            }
+            break;
+        case 2:
+            if (_chdir("\\") == 0) {
+                cout << "Moved to the root directory." << endl;
+            } else {
+                cout << "Failed to move to the root directory." << endl;
+            }
+            break;
+        case 3: {
+            string path;
+            cout << "Enter the directory path: ";
+            cin >> path;
+            if (_chdir(path.c_str()) == 0) {
+                cout << "Directory changed successfully." << endl;
+            } else {
+                cout << "Failed to change directory. It might not exist." << endl;
+            }
+            break;
+        }
+        default:
+            cout << "Invalid option. Try again." << endl;
+    }
+}
